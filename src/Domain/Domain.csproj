@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Camada Domain: o NÚCLEO da aplicação.
+       NÃO referencia nenhuma outra camada nem pacote externo.
+       Aqui ficam as regras e estruturas que não dependem de banco, web ou framework.
+       (Clean Architecture: as dependências sempre apontam PARA o domínio.) -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>BankPriorityQueueApi.Domain</RootNamespace>
+  </PropertyGroup>
+
+</Project>

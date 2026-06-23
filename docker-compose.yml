@@ -1,0 +1,41 @@
+# ============================================================================
+# Sobe TODA a aplicação com um comando: docker compose up --build
+#   - db  : PostgreSQL (banco de dados)
+#   - api : a Web API .NET (depende do banco)
+# Swagger fica em: http://localhost:8080/swagger
+# ============================================================================
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: bankqueue-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: bankqueue
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d bankqueue"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bankqueue-api
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # String de conexão aponta para o serviço "db" da rede do compose.
+      ConnectionStrings__Default: "Host=db;Port=5432;Database=bankqueue;Username=postgres;Password=postgres"
+      ASPNETCORE_ENVIRONMENT: Production
+    ports:
+      - "8080:8080"
+
+volumes:
+  pgdata:

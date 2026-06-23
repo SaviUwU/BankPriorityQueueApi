@@ -1,0 +1,20 @@
+# .NET build
+bin/
+obj/
+*.user
+.vs/
+
+# Rider / VS Code
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# Ferramentas de IA / config local (não versionar)
+.claude/
+CLAUDE.md
+*.local.json
+
+# Artefatos de plugins IA
+.impeccable/
